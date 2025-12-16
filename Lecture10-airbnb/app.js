@@ -3,36 +3,19 @@ const express  = require("express")
 // local moduel 
 
 const useRouter = require("./routes/userRouter")
+const hostRouter = require("./routes/hostRouter")
 
 const app = express()
 
-app.use((req,res,next) => {
-    console.log(req.url,req.method)
-    next()
-})
-
 app.use(express.urlencoded())
 
+app.use(useRouter)
+app.use(hostRouter)
 
 
-app.get("/host/add-home", (req,res,next) => {
-    res.send(`
-        <form action="/host/add-home" method = "POST">
-        <input type="text" name="houseName" placeholder="Enter your Home name">
-        <input type="submit">
-        </form>
-        `)
+app.use((req,res,next) => {
+res.status(400).send("<h1> Page not Found </h1>")
 })
-
-
-app.post("/host/add-home", (req,res,next) => {
-    console.log(req.body)
-    res.send(`
-       <h1> home ragistered sucessfuly</h1>
-       <a href="/"> go to home  </a>
-        `)
-})
-
 
 
 const PORT = 3000
