@@ -1,4 +1,9 @@
+// core module
+const path = require("path")
+
+
 const express  = require("express")
+
 
 // local moduel 
 
@@ -10,11 +15,11 @@ const app = express()
 app.use(express.urlencoded())
 
 app.use(useRouter)
-app.use(hostRouter)
+app.use("/host" ,hostRouter)
 
 
 app.use((req,res,next) => {
-res.status(400).send("<h1> Page not Found </h1>")
+res.status(400).sendFile(path.join( __dirname ,"views" , "404.html"))
 })
 
 
