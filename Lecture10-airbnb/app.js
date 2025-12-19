@@ -3,6 +3,7 @@ const path = require("path")
 
 
 const express  = require("express")
+const rootDir = require("./utils/pathUtil")
 
 
 // local moduel 
@@ -19,7 +20,7 @@ app.use("/host" ,hostRouter)
 
 
 app.use((req,res,next) => {
-res.status(400).sendFile(path.join( __dirname ,"views" , "404.html"))
+res.status(400).sendFile(path.join( rootDir ,"views" , "404.html"))
 })
 
 
