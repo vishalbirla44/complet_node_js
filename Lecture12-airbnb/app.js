@@ -9,7 +9,7 @@ const rootDir = require("./utils/pathUtil")
 // local moduel 
 
 const useRouter = require("./routes/userRouter")
-const hostRouter = require("./routes/hostRouter")
+const {hostRouter} = require("./routes/hostRouter")
 
 const app = express()
 
