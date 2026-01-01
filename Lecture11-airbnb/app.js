@@ -18,7 +18,7 @@ app.use(express.urlencoded())
 app.use(express.static(path.join( rootDir ,"public")))
 
 app.use(useRouter)
-app.use("/host" ,hostRouter)
+app.use("/host" ,hostRouter) 
 
 
 app.use((req,res,next) => {
