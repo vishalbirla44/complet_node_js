@@ -23,13 +23,9 @@ exports.postAddHome = (req, res, next) => {
       photoUrl: req.body.photoUrl
       
     });
-  res.render('host/homeAdded', {pageTitle: 'Home Added Successfully'});
+  res.render('host/home-added', {pageTitle: 'Home Added Successfully'});
 }
 
 
 
-exports.getHomes= (req, res, next) => {
-  const registeredHomes = Home.fetchAll((registeredHomes) => 
-  res.render('store/home-list', {registeredHomes: registeredHomes, pageTitle: 'airbnb Home'})
-);
-}
+
