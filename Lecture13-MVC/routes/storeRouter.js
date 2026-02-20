@@ -10,6 +10,9 @@ const homesController = require("../controllers/storeController");
 
 storeRouter.get("/", homesController.getHomes);
 storeRouter.get("/bookings", homesController.getBookings);
+storeRouter.get("/index", homesController.getIndex);
+storeRouter.get("/favourite", homesController.getFavourites);
+
 
 
 module.exports = storeRouter;
