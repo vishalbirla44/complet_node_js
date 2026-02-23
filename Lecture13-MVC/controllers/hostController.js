@@ -6,7 +6,15 @@ exports.getAddHome = (req, res, next) => {
   res.render('host/addHome', {pageTitle: 'Add Home to airbnb'});
 }
 
-
+exports.getHostHomes= (req, res, next) => {
+  const registeredHomes = Home.fetchAll((registeredHomes) => 
+  res.render('host/host-home-list', 
+    {registeredHomes: registeredHomes,
+     pageTitle: 'Host Homes List', 
+     currentPage: 'host-home'
+    })
+);
+}
 
 exports.postAddHome = (req, res, next) => {
   console.log('Home Registration successful for:', req.body,);

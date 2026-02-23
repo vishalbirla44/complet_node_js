@@ -11,9 +11,10 @@ const rootDir = require("../utils/pathUtil");
 const hostController = require("../controllers/hostController");
 
 hostRouter.get("/add-home", hostController.getAddHome);
+hostRouter.post("/add-home", hostController.postAddHome);
+hostRouter.get("/host-home-list", hostController.getHostHomes);
 
 const registeredHomes = [];
 
-hostRouter.post("/add-home", hostController.postAddHome);
 
 module.exports = hostRouter;
