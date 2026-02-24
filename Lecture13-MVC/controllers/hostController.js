@@ -3,7 +3,7 @@ const Home = require("../models/home");
 const registeredHomes = [];
 
 exports.getAddHome = (req, res, next) => {
-  res.render('host/addHome', {pageTitle: 'Add Home to airbnb'});
+  res.render('host/addHome', {pageTitle: 'Add Home to airbnb', currentPage:'addHome'});
 }
 
 exports.getHostHomes= (req, res, next) => {
@@ -31,7 +31,7 @@ exports.postAddHome = (req, res, next) => {
       photoUrl: req.body.photoUrl
       
     });
-  res.render('host/home-added', {pageTitle: 'Home Added Successfully'});
+  res.render('host/home-added', {pageTitle: 'Home Added Successfully', currentPage: "homeAdded"});
 }
 
 
