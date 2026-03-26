@@ -1,3 +1,4 @@
+const Favourite = require("../models/favourite");
 const Home = require("../models/home");
 
 const registeredHomes = [];
@@ -39,6 +40,19 @@ exports.getFavourites = (req, res, next) => {
   );
 }
 
+exports.postAddFavourites = (req,res,next) => {
+  console.log("come to add to favourites", req.body)
+
+  Favourite.addToFavourite(req.body.id,error => {
+   if(error){
+    console.log("error in adding to favourites", error);
+   }
+   res.redirect("/favourites");
+  });
+  
+}
+
+
 
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
@@ -46,11 +60,10 @@ exports.getHomeDetails = (req, res, next) => {
   Home.findById(homeId, home => {
 console.log("home finded", home);
     if(!home){
-    
       res.redirect("/homes");
     }
+    
     else{
-
      res.render('store/home-details',
     {
       home:home,
