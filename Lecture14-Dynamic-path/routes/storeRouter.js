@@ -11,11 +11,11 @@ const storeController = require("../controllers/storeController");
 storeRouter.get("/", storeController.getIndex);
 storeRouter.get("/homes", storeController.getHomes);
 storeRouter.get("/bookings", storeController.getBookings);
-storeRouter.get("/favourite", storeController.getFavourites);
+storeRouter.get("/favourite", storeController.getFavouriteList);
 
 
 storeRouter.get("/homes/:homeId" , storeController.getHomeDetails) ;
-storeRouter.post("/favourite", storeController.getFavourites);
+storeRouter.post("/favourite", storeController.postAddToFavourite);
 
  
 module.exports = storeRouter;

@@ -1,41 +1,30 @@
-// core module
-const path = require('path');
-const fs = require('fs');
+// Core Modules
+const fs = require("fs");
+const path = require("path");
+const rootDir = require("../utils/pathUtil");
 
-// local module
-const rootDir = require('../utils/pathUtil');
-
-
-
-// let registeredHomes = [];
-
- const favouriteDataPath = path.join(rootDir, 'data' , 'favourite.json');
-
+const favouriteDataPath = path.join(rootDir, "data", "favourite.json");
 
 module.exports = class Favourite {
 
-    static addToFavourite(homeId,callback){
-      Favourite.getfavourite((favourites)=> {
-             registeredHomes.push(this);
+  static addToFavourite(homeId, callback) {
+    Favourite.getFavourites((favourites) => {
+      
+      if (favourites.includes(homeId)) {
+        callback("Home is already marked favourite");
+      } else {
+        
+        favourites.push(homeId);
+        fs.writeFile(favouriteDataPath, JSON.stringify(favourites), callback);
+      }
+    });
+  }
 
-             if(favourites.includes(homeId)){
-                console.log("already in favourites");
-             }
+  static getFavourites(callback) {
+    fs.readFile(favouriteDataPath, (err, data) => {
+      callback(!err ? JSON.parse(data) : []);
+    });
+  }
 
-             else{
-             favourites.push(homeId);
-              fs.writeFile(favouriteDataPath,JSON.stringify(favourites),callback) 
-             }
-             })
-    }
-
-
-
-   static getfavourite(callback){
-    fs.readFile(favouriteDataPath, (error, data) => {
-               callback(!error ? JSON.parse(data) : []) ;
-             })
-   }
-   
-
-    }
+  
+};

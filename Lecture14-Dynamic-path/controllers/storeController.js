@@ -1,10 +1,10 @@
 const Favourite = require("../models/favourite");
 const Home = require("../models/home");
 
-const registeredHomes = [];
+
 
 exports.getIndex = (req, res, next) => {
-  const registeredHomes = Home.fetchAll((registeredHomes) =>
+  Home.fetchAll((registeredHomes) =>
     res.render('store/index', {
       registeredHomes: registeredHomes,
       pageTitle: 'airbnb Home',
@@ -13,7 +13,7 @@ exports.getIndex = (req, res, next) => {
   );
 }
 exports.getHomes = (req, res, next) => {
-  const registeredHomes = Home.fetchAll((registeredHomes) =>
+ Home.fetchAll((registeredHomes) =>
     res.render('store/home-list',
       {
         registeredHomes: registeredHomes,
@@ -30,8 +30,19 @@ exports.getBookings = (req, res, next) => {
   })
 }
 
-exports.getFavourites = (req, res, next) => {
-  const registeredHomes = Home.fetchAll((registeredHomes) =>
+exports.getFavouriteList = (req, res, next) => {
+  Favourite.getFavourites(favourites => {
+     Home.fetchAll((registeredHomes) => {
+      const favouriteHomes = registeredHomes.filter(home => favourites.includes(home.id));
+    res.render('store/favourite-list', {
+      favouriteHomes: favouriteHomes,
+      pageTitle: 'My Favourittes',
+      currentPage: 'favourites'
+    })
+  });
+  })
+
+  Home.fetchAll((registeredHomes) =>
     res.render('store/favourite-list', {
       registeredHomes: registeredHomes,
       pageTitle: 'My Favourittes',
@@ -40,40 +51,37 @@ exports.getFavourites = (req, res, next) => {
   );
 }
 
-exports.postAddFavourites = (req,res,next) => {
-  console.log("come to add to favourites", req.body)
-
-  Favourite.addToFavourite(req.body.id,error => {
-   if(error){
-    console.log("error in adding to favourites", error);
-   }
-   res.redirect("/favourites");
-  });
-  
+exports.postAddToFavourite = (req, res, next) => {
+  Favourite.addToFavourite(req.body.id, error => {
+    if (error) {
+      console.log("Error while marking favourite: ", error);
+    }
+    res.redirect("/favourite");
+  })
 }
 
 
 
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
-  
+
   Home.findById(homeId, home => {
-console.log("home finded", home);
-    if(!home){
+    console.log("home finded", home);
+    if (!home) {
       res.redirect("/homes");
     }
-    
-    else{
-     res.render('store/home-details',
-    {
-      home:home,
-      pageTitle: 'Homes details',
-      currentPage: 'home'
-    })
+
+    else {
+      res.render('store/home-details',
+        {
+          home: home,
+          pageTitle: 'Homes details',
+          currentPage: 'home'
+        })
 
     }
 
   })
- 
+
 
 }
