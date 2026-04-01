@@ -41,20 +41,22 @@ exports.getFavouriteList = (req, res, next) => {
     })
   });
   })
-
-  Home.fetchAll((registeredHomes) =>
-    res.render('store/favourite-list', {
-      registeredHomes: registeredHomes,
-      pageTitle: 'My Favourittes',
-      currentPage: 'favourites'
-    })
-  );
 }
 
 exports.postAddToFavourite = (req, res, next) => {
   Favourite.addToFavourite(req.body.id, error => {
     if (error) {
       console.log("Error while marking favourite: ", error);
+    }
+    res.redirect("/favourite");
+  })
+}
+
+exports.postRemoveFromFavourite = (req, res, next) => {
+  const homeId = req.params.homeId;
+  Favourite.deleteById(homeId, error => {
+    if (error) {
+      console.log('Error while removing from Favourite', error);
     }
     res.redirect("/favourite");
   })
