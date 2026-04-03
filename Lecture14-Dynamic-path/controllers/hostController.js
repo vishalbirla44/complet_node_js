@@ -3,9 +3,21 @@ const Home = require("../models/home");
 const registeredHomes = [];
 
 exports.getAddHome = (req, res, next) => {
-  res.render('host/addHome', {pageTitle: 'Add Home to airbnb', currentPage:'addHome'});
+  res.render('host/edite-home', {
+    pageTitle: 'Add Home to airbnb', 
+    currentPage:'addHome'
+  });
 }
 
+exports.getEditHome = (req, res, next) => {
+  res.render('host/edite-home', {
+    pageTitle: 'edit home to airbnb', 
+    currentPage:'host-home'
+  });
+}
+
+
+ 
 exports.getHostHomes= (req, res, next) => {
   const registeredHomes = Home.fetchAll((registeredHomes) => 
   res.render('host/host-home-list', 
