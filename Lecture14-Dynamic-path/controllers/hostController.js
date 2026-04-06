@@ -10,6 +10,9 @@ exports.getAddHome = (req, res, next) => {
 }
 
 exports.getEditHome = (req, res, next) => {
+  const homeId = req.params.homeId;
+  const editing = req.query.editing
+  console.log('homeId:', homeId, 'editing:', editing);
   res.render('host/edite-home', {
     pageTitle: 'edit home to airbnb', 
     currentPage:'host-home'
@@ -19,6 +22,7 @@ exports.getEditHome = (req, res, next) => {
 
  
 exports.getHostHomes= (req, res, next) => {
+
   const registeredHomes = Home.fetchAll((registeredHomes) => 
   res.render('host/host-home-list', 
     {registeredHomes: registeredHomes,
