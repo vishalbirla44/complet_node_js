@@ -5,19 +5,31 @@ const registeredHomes = [];
 exports.getAddHome = (req, res, next) => {
   res.render('host/edite-home', {
     pageTitle: 'Add Home to airbnb', 
-    currentPage:'addHome'
+    currentPage:'addHome',
+     editing : false, 
   });
 }
 
 exports.getEditHome = (req, res, next) => {
   const homeId = req.params.homeId;
-  const editing = req.query.editing
-  console.log('homeId:', homeId, 'editing:', editing);
-  res.render('host/edite-home', {
+  const editing = req.query.editing === 'true' ;
+  
+  Home.findById(homeId, (home) => {
+    if(!home){
+      console.log("home not found for editing");  
+     return res.redirect('/host/host-home-list');
+    }
+      console.log('homeId:', homeId, 'editing:', editing); 
+     res.render('host/edite-home', {
     pageTitle: 'edit home to airbnb', 
-    currentPage:'host-home'
+    currentPage:'host-home',
+    editing : editing ,
+    
   });
+  })
 }
+
+ 
 
 
  
