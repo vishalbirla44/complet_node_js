@@ -14,7 +14,13 @@ module.exports = class Home {
   }
 
   save() {
-   return db.execute('INSERT INTO homes (houseName, price, location, rating, photoUrl,discraption) VALUES (?,?,?,?,?,?)',[this.houseName,this.price,this.location,this.rating,this.photoUrl,this.discraption]);
+   if(this.id){
+    return db.execute('UPDATE homes SET houseName=?, price=?, location=?, rating=?, photoUrl=?,discraption=? WHERE id=?',[this.houseName,this.price,this.location,this.rating,this.photoUrl,this.discraption , this.id]);
+   }
+   else{
+    return db.execute('INSERT INTO homes (houseName, price, location, rating, photoUrl,discraption) VALUES (?,?,?,?,?,?)',[this.houseName,this.price,this.location,this.rating,this.photoUrl,this.discraption]);
+
+   }
   }
 
   static fetchAll(callback) {
@@ -25,11 +31,11 @@ module.exports = class Home {
 
 
 
-  static findById(homeId, callback) {
-
+  static findById(homeId) {
+    return db.execute('SELECT * FROM homes WHERE id=?',[homeId]);
   }
 
-  static deleteById(homeId, callback) {
-
+  static deleteById(homeId) {
+    return db.execute(' DELETE FROM homes WHERE id=?',[homeId]);
   }
 };
