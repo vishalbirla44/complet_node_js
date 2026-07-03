@@ -10,7 +10,7 @@ const hostRouter = require("./routes/hostRouter")
 const rootDir = require("./utils/pathUtil");
 const errorcontrollers = require("./controllers/errors")
 
-
+const{default:mongoose} =  require('mongoose')
 
 
 
@@ -28,6 +28,13 @@ app.use(express.static(path.join(rootDir, 'public')))
 app.use(errorcontrollers.pageNotFound);
 
 const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on address http://localhost:${PORT}`);
+const DB_PATH = "mongodb+srv://birlav067_db_user:vishal@learnmongo.tveg92n.mongodb.net/airbnb?appName=learnmongo"
+
+mongoose.connect(DB_PATH).then(() => {
+  app.listen(PORT, () => {
+    console.log("connect to deta base")
+    console.log(`Server running on address http://localhost:${PORT}`);
+  });
+}).catch(err => {
+  console.log("error to connect the detabase", err)
 });
