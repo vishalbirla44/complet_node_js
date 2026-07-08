@@ -8,6 +8,7 @@
           >airbnb</a
         >
       </li>
+      <% if (isLoggedIn) { %>
       <li>
         <a
           href="/homes"
@@ -43,10 +44,11 @@
           >Add Home</a
         >
       </li>
+      <%  } %>
       <li>
         <a href="/login"
-        class="<%= currentPage === 'addHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-        >LOG in</a>
+        class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
+        >Login</a>
         </a>
       </li>
     </ul>

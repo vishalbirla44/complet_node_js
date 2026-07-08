@@ -1,8 +1,14 @@
 
 exports.getLogin = (req, res, next) => {
-  res.render("host/edit-home", {
+  res.render("auth/login", {
     pageTitle: "Add Home to airbnb",
-    currentPage: "addHome",
-    editing: false,
+    currentPage: "login",
+    isLoggedIn : false,
   });
+};
+
+exports.postLogin = (req, res, next) => {
+  console.log(req.body)
+  req.isLoggedIn = true
+  res.redirect("/")
 };
