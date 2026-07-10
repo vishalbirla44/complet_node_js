@@ -3,6 +3,9 @@ const path = require('path');
 
 // External Module
 const express = require('express');
+const session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session); 
+const DB_PATH = "mongodb+srv://birlav067_db_user:vishal@learnmongo.tveg92n.mongodb.net/airbnb?appName=learnmongo"
 
 //Local Module
 const storeRouter = require("./routes/storeRouter")
@@ -20,7 +23,23 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+const store = new MongoDBStore({
+  uri:DB_PATH,
+  collection : 'sessions'
+})
+
 app.use(express.urlencoded());
+app.use(session ({
+   secret: "vishal with codding",
+   resave: false,
+   saveUninitialized:true,
+   store:store,
+}));
+app.use((req,res,next) => {
+  req.isLoggedIn = req.session.isLoggedIn;
+  next(); 
+
+})
 app.use(authRouter)
 app.use(storeRouter);
 app.use("/host", (req,res,next) => {
@@ -37,7 +56,6 @@ app.use(express.static(path.join(rootDir, 'public')))
 app.use(errorcontrollers.pageNotFound);
 
 const PORT = 3000;
-const DB_PATH = "mongodb+srv://birlav067_db_user:vishal@learnmongo.tveg92n.mongodb.net/airbnb?appName=learnmongo"
 
 mongoose.connect(DB_PATH).then(() => {
   app.listen(PORT, () => {
